@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://b87u8qu1lgpt1"]
+
+[ext_resource type="Script" uid="uid://onkp3alec703" path="res://scenes/player.gd" id="1_3vyb7"]
+
+[node name="Player" type="CharacterBody2D" unique_id=1494032262]
+script = ExtResource("1_3vyb7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=298689191]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1567685349]
+
+[node name="Aim Pivot" type="Node2D" parent="." unique_id=1112791368]
+position = Vector2(12, -5)
+
+[node name="Line2D" type="Line2D" parent="Aim Pivot" unique_id=671833718]
+points = PackedVector2Array(0, 0, 30, 0)
+width = 5.0
