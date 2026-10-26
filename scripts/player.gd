@@ -5,7 +5,7 @@ extends CharacterBody2D
 
 var gravity: float = 980.0
 
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var aim_pivot: Node2D = $AimPivot
 
 
@@ -14,8 +14,8 @@ func _physics_process(delta: float) -> void:
 		velocity.y += gravity * delta
 
 	var direction := Input.get_axis(
-		"ui_left",
-        "ui_right"
+		"left",
+        "right"
 	)
 
 	velocity.x = direction * move_speed
