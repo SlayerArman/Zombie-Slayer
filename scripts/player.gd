@@ -1,8 +1,11 @@
 extends CharacterBody2D
 
+@export var afterimage_scene: PackedScene
+
 @export var move_speed: float = 250.0
 @export var jump_velocity: float = -420.0
 @export var gravity: float = 980.0
+@export var max_jumps: int = 2
 
 @export var dash_speed: float = 850.0
 @export var dash_duration: float = 0.14
@@ -12,6 +15,7 @@ var is_dashing: bool = false
 var dash_timer: float = 0.0
 var dash_cooldown_timer: float = 0.0
 var dash_direction: float = 1.0
+var jumps_left: int = 2
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var aim_pivot: Node2D = $AimPivot
@@ -50,8 +54,12 @@ func _physics_process(delta: float) -> void:
 
 	velocity.x = direction * move_speed
 
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if is_on_floor():
+		jumps_left = max_jumps
+
+	if Input.is_action_just_pressed("jump") and jumps_left > 0:
 		velocity.y = jump_velocity
+		jumps_left -= 1
 
 	move_and_slide()
 
@@ -70,3 +78,20 @@ func start_dash(direction: float, mouse_position: Vector2) -> void:
 
 	is_dashing = true
 	dash_timer = dash_duration
+
+func spawn_afterimage() -> void:
+	if afterimage_scene == null:
+		return
+
+	var ghost = afterimage_scene.instantiate()
+	get_parent().add_child(ghost)
+
+	ghost.texture = sprite.sprite_frames.get_frame_texture(
+		sprite.animation,
+		sprite.frame
+	)
+
+	ghost.global_position = sprite.global_position
+	ghost.global_rotation = sprite.global_rotation
+	ghost.flip_h = sprite.flip_h
+	ghost.modulate = Color(0.5, 0.85, 1.0, 0.65)

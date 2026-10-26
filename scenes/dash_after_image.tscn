@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://d140i6dclw632"]
+
+[ext_resource type="Script" uid="uid://cfj3t8s25frhs" path="res://scripts/dash_after_image.gd" id="1_4l5gn"]
+
+[node name="DashAfterImage" type="Sprite2D" unique_id=1039472438]
+script = ExtResource("1_4l5gn")
